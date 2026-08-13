@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking confirmed — TrustCare Collection Centre</title>
+<link rel="icon" href="assets/logo-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="logo"><img src="assets/logo-icon.png" alt="TrustCare Collection Centre" class="logo-mark">TrustCare</a>
+    <nav class="nav-links"></nav>
+    <div class="nav-cta" id="userMount"></div>
+  </div>
+</header>
+
+<div class="confirm-shell">
+  <p class="eyebrow" id="statusLine">Booking confirmed</p>
+  <h1 style="font-family:var(--display); font-size:28px; margin-top:8px;" id="headline">You're all set.</h1>
+  <p style="color:var(--ink-soft); font-size:14.5px; margin-top:8px;" id="subline">
+    A technician will arrive in your selected window. We'll text updates to your contact number.
+  </p>
+
+  <div id="ticketMount"></div>
+
+  <div class="rx-note" style="text-align:left;">
+    <span>Pay in cash on the day, or send it ahead via UPI: <strong>skswatantra@axl</strong></span>
+  </div>
+
+  <a href="book.html" class="btn btn-primary">Book another visit</a>
+
+  <div class="bookings-list">
+    <h3>Your bookings</h3>
+    <div id="bookingsMount"></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  HD.requireAuth('confirm.html');
+  HD.renderUserPill('userMount');
+
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const booking = id ? HD.findBooking(id) : null;
+
+  if (booking) {
+    document.getElementById('ticketMount').innerHTML = `
+      <div class="ticket">
+        <div class="ticket-top">
+          <span class="ticket-id">REQUISITION · ${booking.id}</span>
+          <span class="ticket-badge">● scheduled</span>
+        </div>
+        <div class="ticket-row"><span class="k">Patient</span><span class="v">${booking.patient}</span></div>
+        <div class="ticket-row"><span class="k">Test</span><span class="v">${booking.tests.join(', ')}</span></div>
+        <div class="ticket-perf"></div>
+        <div class="ticket-row"><span class="k">Date</span><span class="v">${HD.fmtDate(booking.date)}</span></div>
+        <div class="ticket-row"><span class="k">Timing</span><span class="v">${booking.timing}</span></div>
+        <div class="ticket-row"><span class="k">Address</span><span class="v">${booking.address}</span></div>
+        <div class="ticket-row"><span class="k">Total</span><span class="v">${booking.total !== null ? HD.fmtMoney(booking.total) : 'Confirmed at visit'}</span></div>
+        <span class="ticket-stamp">Confirmed</span>
+      </div>`;
+  } else {
+    document.getElementById('statusLine').textContent = 'No booking found';
+    document.getElementById('headline').textContent = "We couldn't find that booking.";
+    document.getElementById('subline').textContent = 'It may have been made on a different device — bookings are stored locally per device in this preview.';
+  }
+
+  // ---- booking history ----
+  const all = HD.getBookings();
+  const mount = document.getElementById('bookingsMount');
+  if (all.length === 0) {
+    mount.innerHTML = `<p class="empty-state">No bookings yet on this device.</p>`;
+  } else {
+    mount.innerHTML = all.map(b => `
+      <div class="mini-ticket">
+        <span>
+          <strong>${b.tests[0]}${b.tests.length > 1 ? ` +${b.tests.length - 1} more` : ''}</strong><br>
+          <span class="id">${b.id} · ${HD.fmtDate(b.date)}</span>
+        </span>
+        <span>${b.total !== null ? HD.fmtMoney(b.total) : 'TBC'}</span>
+      </div>`).join('');
+  }
+</script>
+
+<a href="https://wa.me/917717772571" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.4.7 4.63 1.92 6.52L4 29l7.63-1.87a11.9 11.9 0 0 0 4.39.83h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3zm0 21.9c-1.55 0-3.03-.4-4.32-1.15l-.31-.18-4.53 1.11 1.14-4.42-.2-.32a9.9 9.9 0 0 1-1.5-5.23c0-5.46 4.45-9.9 9.93-9.9 2.65 0 5.14 1.03 7.01 2.9a9.85 9.85 0 0 1 2.9 7.01c0 5.46-4.45 9.9-9.93 9.9zm5.44-7.41c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35z"/></svg>
+</a>
+</body>
+</html>

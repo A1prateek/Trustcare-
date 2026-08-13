@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a home visit — TrustCare Collection Centre</title>
+<link rel="icon" href="assets/logo-icon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="index.html" class="logo"><img src="assets/logo-icon.png" alt="TrustCare Collection Centre" class="logo-mark">TrustCare</a>
+    <nav class="nav-links"></nav>
+    <div class="nav-cta" id="userMount"></div>
+  </div>
+</header>
+
+<div class="flow-shell">
+  <div class="flow-progress">
+    <div class="bar active" data-bar="1"><div class="fill"></div></div>
+    <div class="bar" data-bar="2"><div class="fill"></div></div>
+    <div class="bar" data-bar="3"><div class="fill"></div></div>
+    <div class="bar" data-bar="4"><div class="fill"></div></div>
+  </div>
+
+  <!-- STEP 1: tests -->
+  <div class="flow-step active" data-step="1">
+    <p class="eyebrow">Step 1 of 4</p>
+    <h2>What are we testing?</h2>
+    <p class="sub">Choose how you'd like to select your tests.</p>
+
+    <div class="choice-row">
+      <button type="button" class="choice-card" id="modeRx">
+        <span class="mono">Option A</span>
+        <h4>Doctor-prescribed</h4>
+        <p>I have a test recommended by my doctor.</p>
+      </button>
+      <button type="button" class="choice-card" id="modeSelf">
+        <span class="mono">Option B</span>
+        <h4>Self-selected</h4>
+        <p>I'll pick from common tests myself.</p>
+      </button>
+    </div>
+
+    <div id="rxPanel" style="display:none;">
+      <div class="field">
+        <label for="rxDoctor">Doctor's name (optional)</label>
+        <input type="text" id="rxDoctor" placeholder="e.g. Dr. Mehta">
+      </div>
+      <div class="field">
+        <label for="rxTests">Tests listed on your prescription</label>
+        <textarea id="rxTests" placeholder="e.g. CBC, Lipid Profile, HbA1c"></textarea>
+        <p class="field-hint">Our technician will confirm the exact panel and price with you before the visit.</p>
+      </div>
+    </div>
+
+    <div id="selfPanel" style="display:none;">
+      <div class="check-grid" id="testGrid"></div>
+    </div>
+
+    <div class="flow-nav">
+      <span></span>
+      <button type="button" class="btn btn-primary" id="next1" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: timing -->
+  <div class="flow-step" data-step="2">
+    <p class="eyebrow">Step 2 of 4</p>
+    <h2>When should we come?</h2>
+    <p class="sub">Follow your doctor's recommended timing, or pick what's convenient.</p>
+
+    <div class="choice-row">
+      <button type="button" class="choice-card" id="timeDoctor">
+        <span class="mono">Option A</span>
+        <h4>Doctor-recommended time</h4>
+        <p>e.g. fasting, early morning</p>
+      </button>
+      <button type="button" class="choice-card" id="timeSelf">
+        <span class="mono">Option B</span>
+        <h4>My convenient time</h4>
+        <p>Pick a slot that suits you</p>
+      </button>
+    </div>
+
+    <div class="field">
+      <label for="visitDate">Visit date</label>
+      <input type="date" id="visitDate">
+    </div>
+
+    <div id="doctorTimePanel" style="display:none;" class="field">
+      <label for="doctorTimeNote">Doctor's instructions on timing</label>
+      <input type="text" id="doctorTimeNote" placeholder="e.g. Fasting, between 7–9 AM">
+    </div>
+
+    <div id="slotPanel" style="display:none;">
+      <label style="display:block; font-size:13px; font-weight:600; margin-bottom:8px;">Preferred window</label>
+      <div class="slot-grid" id="slotGrid">
+        <button type="button" class="slot" data-slot="7–9 AM">7–9 AM</button>
+        <button type="button" class="slot" data-slot="9–11 AM">9–11 AM</button>
+        <button type="button" class="slot" data-slot="11 AM–1 PM">11 AM–1 PM</button>
+        <button type="button" class="slot" data-slot="5–7 PM">5–7 PM</button>
+        <button type="button" class="slot" data-slot="7–9 PM">7–9 PM</button>
+        <button type="button" class="slot" data-slot="9–10 PM">9–10 PM</button>
+      </div>
+    </div>
+
+    <div class="flow-nav">
+      <button type="button" class="btn btn-ghost" data-back="1">← Back</button>
+      <button type="button" class="btn btn-primary" id="next2" disabled>Continue →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: address -->
+  <div class="flow-step" data-step="3">
+    <p class="eyebrow">Step 3 of 4</p>
+    <h2>Where should we visit?</h2>
+    <p class="sub">The technician will come to this address.</p>
+
+    <div class="field">
+      <label for="address">Address</label>
+      <textarea id="address" placeholder="Flat / house no., street, area"></textarea>
+    </div>
+    <div class="field">
+      <label for="landmark">Landmark (optional)</label>
+      <input type="text" id="landmark" placeholder="e.g. Near City Hospital">
+    </div>
+    <div class="field">
+      <label for="pincode">Pincode</label>
+      <input type="text" id="pincode" inputmode="numeric" placeholder="e.g. 302001">
+    </div>
+    <div class="field">
+      <label for="contactPhone">Contact number for the visit</label>
+      <input type="tel" id="contactPhone" placeholder="+91 98765 43210">
+    </div>
+
+    <div class="flow-nav">
+      <button type="button" class="btn btn-ghost" data-back="2">← Back</button>
+      <button type="button" class="btn btn-primary" id="next3" disabled>Review booking →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: review -->
+  <div class="flow-step" data-step="4">
+    <p class="eyebrow">Step 4 of 4</p>
+    <h2>Review &amp; confirm</h2>
+    <p class="sub">Check the details below before confirming.</p>
+
+    <div id="reviewBody"></div>
+    <div class="summary-total">
+      <span>Estimated total</span>
+      <span id="reviewTotal">—</span>
+    </div>
+
+    <div class="flow-nav">
+      <button type="button" class="btn btn-ghost" data-back="3">← Back</button>
+      <button type="button" class="btn btn-stamp" id="confirmBtn">Confirm booking</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+  const user = HD.requireAuth('book.html');
+</script>
+<script>
+HD.renderUserPill('userMount');
+
+const TESTS = [
+  { id:'cbc', name:'Complete Blood Count (CBC)', price:399 },
+  { id:'sugar_f', name:'Blood Sugar — Fasting', price:149 },
+  { id:'sugar_pp', name:'Blood Sugar — Post-Prandial', price:149 },
+  { id:'hba1c', name:'HbA1c', price:499 },
+  { id:'lipid', name:'Lipid Profile', price:599 },
+  { id:'thyroid', name:'Thyroid Panel (TSH)', price:349 },
+  { id:'vitd', name:'Vitamin D', price:899 },
+  { id:'vitb12', name:'Vitamin B12', price:599 },
+  { id:'lft', name:'Liver Function Test', price:499 },
+  { id:'kft', name:'Kidney Function Test', price:499 },
+];
+
+const state = {
+  mode:null, selectedTests:[], rxDoctor:'', rxTests:'',
+  timeMode:null, visitDate:'', doctorTimeNote:'', slot:'',
+  address:'', landmark:'', pincode:'', contactPhone: (user && user.phone) || ''
+};
+
+// ---- render test grid ----
+const testGrid = document.getElementById('testGrid');
+TESTS.forEach(t => {
+  const div = document.createElement('label');
+  div.className = 'check-item';
+  div.innerHTML = `
+    <input type="checkbox" value="${t.id}">
+    <span>
+      <span class="t">${t.name}</span><br>
+      <span class="p">${HD.fmtMoney(t.price)}</span>
+    </span>`;
+  const input = div.querySelector('input');
+  div.addEventListener('click', (e) => {
+    if (e.target !== input) input.checked = !input.checked;
+    div.classList.toggle('checked', input.checked);
+    state.selectedTests = [...testGrid.querySelectorAll('input:checked')].map(i => i.value);
+    updateNext1();
+  });
+  testGrid.appendChild(div);
+});
+
+// ---- step navigation ----
+function goToStep(n){
+  document.querySelectorAll('.flow-step').forEach(s => s.classList.toggle('active', s.dataset.step == n));
+  document.querySelectorAll('.flow-progress .bar').forEach(b => {
+    const i = Number(b.dataset.bar);
+    b.classList.toggle('active', i === n);
+    b.classList.toggle('done', i < n);
+  });
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+document.querySelectorAll('[data-back]').forEach(btn => {
+  btn.addEventListener('click', () => goToStep(Number(btn.dataset.back)));
+});
+
+// ---- step 1 logic ----
+const modeRx = document.getElementById('modeRx');
+const modeSelf = document.getElementById('modeSelf');
+const rxPanel = document.getElementById('rxPanel');
+const selfPanel = document.getElementById('selfPanel');
+const next1 = document.getElementById('next1');
+
+modeRx.addEventListener('click', () => {
+  state.mode = 'rx';
+  modeRx.classList.add('selected'); modeSelf.classList.remove('selected');
+  rxPanel.style.display = 'block'; selfPanel.style.display = 'none';
+  updateNext1();
+});
+modeSelf.addEventListener('click', () => {
+  state.mode = 'self';
+  modeSelf.classList.add('selected'); modeRx.classList.remove('selected');
+  selfPanel.style.display = 'block'; rxPanel.style.display = 'none';
+  updateNext1();
+});
+document.getElementById('rxTests').addEventListener('input', e => { state.rxTests = e.target.value; updateNext1(); });
+document.getElementById('rxDoctor').addEventListener('input', e => { state.rxDoctor = e.target.value; });
+
+function updateNext1(){
+  let ok = false;
+  if (state.mode === 'rx') ok = state.rxTests.trim().length > 0;
+  if (state.mode === 'self') ok = state.selectedTests.length > 0;
+  next1.disabled = !ok;
+}
+next1.addEventListener('click', () => goToStep(2));
+
+// ---- step 2 logic ----
+const timeDoctor = document.getElementById('timeDoctor');
+const timeSelf = document.getElementById('timeSelf');
+const doctorTimePanel = document.getElementById('doctorTimePanel');
+const slotPanel = document.getElementById('slotPanel');
+const next2 = document.getElementById('next2');
+const visitDate = document.getElementById('visitDate');
+
+const today = new Date().toISOString().split('T')[0];
+visitDate.min = today;
+visitDate.addEventListener('change', e => { state.visitDate = e.target.value; updateNext2(); });
+
+timeDoctor.addEventListener('click', () => {
+  state.timeMode = 'doctor';
+  timeDoctor.classList.add('selected'); timeSelf.classList.remove('selected');
+  doctorTimePanel.style.display = 'block'; slotPanel.style.display = 'none';
+  updateNext2();
+});
+timeSelf.addEventListener('click', () => {
+  state.timeMode = 'self';
+  timeSelf.classList.add('selected'); timeDoctor.classList.remove('selected');
+  slotPanel.style.display = 'block'; doctorTimePanel.style.display = 'none';
+  updateNext2();
+});
+document.getElementById('doctorTimeNote').addEventListener('input', e => { state.doctorTimeNote = e.target.value; updateNext2(); });
+document.querySelectorAll('.slot').forEach(s => {
+  s.addEventListener('click', () => {
+    document.querySelectorAll('.slot').forEach(x => x.classList.remove('selected'));
+    s.classList.add('selected');
+    state.slot = s.dataset.slot;
+    updateNext2();
+  });
+});
+
+function updateNext2(){
+  let ok = !!state.visitDate;
+  if (state.timeMode === 'doctor') ok = ok && state.doctorTimeNote.trim().length > 0;
+  else if (state.timeMode === 'self') ok = ok && !!state.slot;
+  else ok = false;
+  next2.disabled = !ok;
+}
+next2.addEventListener('click', () => goToStep(3));
+
+// ---- step 3 logic ----
+const next3 = document.getElementById('next3');
+['address','landmark','pincode','contactPhone'].forEach(id => {
+  const el = document.getElementById(id);
+  if (state[id]) el.value = state[id];
+  el.addEventListener('input', e => { state[id] = e.target.value; updateNext3(); });
+});
+function updateNext3(){
+  next3.disabled = !(state.address.trim() && state.pincode.trim() && state.contactPhone.trim());
+}
+next3.addEventListener('click', () => { renderReview(); goToStep(4); });
+
+// ---- step 4: review + confirm ----
+function renderReview(){
+  const body = document.getElementById('reviewBody');
+  let testsHtml, total;
+  if (state.mode === 'self') {
+    const chosen = TESTS.filter(t => state.selectedTests.includes(t.id));
+    total = chosen.reduce((s,t) => s + t.price, 0);
+    testsHtml = chosen.map(t => `<div class="ticket-row"><span class="k">Test</span><span class="v">${t.name} — ${HD.fmtMoney(t.price)}</span></div>`).join('');
+  } else {
+    total = null;
+    testsHtml = `<div class="ticket-row"><span class="k">Prescribed tests</span><span class="v">${state.rxTests}</span></div>` +
+      (state.rxDoctor ? `<div class="ticket-row"><span class="k">Doctor</span><span class="v">${state.rxDoctor}</span></div>` : '');
+  }
+  const timingHtml = state.timeMode === 'doctor'
+    ? `<div class="ticket-row"><span class="k">Timing</span><span class="v">${state.doctorTimeNote}</span></div>`
+    : `<div class="ticket-row"><span class="k">Window</span><span class="v">${state.slot}</span></div>`;
+
+  body.innerHTML = `
+    <div class="ticket" style="transform:none; max-width:none; margin:0 0 8px;">
+      <div class="ticket-top">
+        <span class="ticket-id">DRAFT REQUISITION</span>
+        <span class="ticket-badge">● pending confirm</span>
+      </div>
+      <div class="ticket-row"><span class="k">Patient</span><span class="v">${user.name}</span></div>
+      ${testsHtml}
+      <div class="ticket-perf"></div>
+      <div class="ticket-row"><span class="k">Date</span><span class="v">${HD.fmtDate(state.visitDate)}</span></div>
+      ${timingHtml}
+      <div class="ticket-row"><span class="k">Address</span><span class="v">${state.address}${state.landmark ? ', ' + state.landmark : ''} — ${state.pincode}</span></div>
+      <div class="ticket-row"><span class="k">Contact</span><span class="v">${state.contactPhone}</span></div>
+    </div>`;
+
+  document.getElementById('reviewTotal').textContent = total !== null ? HD.fmtMoney(total) : 'Confirmed at visit';
+  state.total = total;
+}
+
+document.getElementById('confirmBtn').addEventListener('click', () => {
+  const booking = {
+    id: HD.makeId(),
+    createdAt: new Date().toISOString(),
+    patient: user.name,
+    mode: state.mode,
+    tests: state.mode === 'self' ? TESTS.filter(t => state.selectedTests.includes(t.id)).map(t => t.name) : [state.rxTests],
+    doctor: state.rxDoctor || null,
+    date: state.visitDate,
+    timing: state.timeMode === 'doctor' ? state.doctorTimeNote : state.slot,
+    address: `${state.address}${state.landmark ? ', ' + state.landmark : ''} — ${state.pincode}`,
+    contactPhone: state.contactPhone,
+    total: state.total
+  };
+  HD.addBooking(booking);
+  window.location.href = `confirm.html?id=${encodeURIComponent(booking.id)}`;
+});
+</script>
+
+<a href="https://wa.me/917717772571" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.02 3C9.4 3 4 8.4 4 15.02c0 2.4.7 4.63 1.92 6.52L4 29l7.63-1.87a11.9 11.9 0 0 0 4.39.83h.01c6.62 0 12.02-5.4 12.02-12.02C28.05 8.4 22.65 3 16.02 3zm0 21.9c-1.55 0-3.03-.4-4.32-1.15l-.31-.18-4.53 1.11 1.14-4.42-.2-.32a9.9 9.9 0 0 1-1.5-5.23c0-5.46 4.45-9.9 9.93-9.9 2.65 0 5.14 1.03 7.01 2.9a9.85 9.85 0 0 1 2.9 7.01c0 5.46-4.45 9.9-9.93 9.9zm5.44-7.41c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.69.62.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35z"/></svg>
+</a>
+</body>
+</html>
